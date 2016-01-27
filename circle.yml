@@ -1,0 +1,21 @@
+machine:
+  environment:
+    RACKET_DIR: "$HOME/racket"
+    RACKET_URL: "http://www.eecs.northwestern.edu/racket/6.2.1/racket-6.2.1-x86_64-linux-ubuntu-precise.sh"
+  post:
+    - if [[ ! -e "$RACKET_DIR/bin/racket" ]]; then
+        curl -L -o racket.sh $RACKET_URL;
+        sh ./racket.sh --in-place --dest $RACKET_DIR;
+      fi
+    - curl -L -o racket.sh $RACKET_URL
+    - git clone https://github.com/emina/rosette.git rosette
+    - cd rosette && ~/racket/bin/raco link rosette && ~/racket/bin/raco setup -l rosette
+
+dependencies:
+  cache_directories:
+    - "~/racket"
+
+test:
+  override:
+    - ~/racket/bin/raco make rosette/litmus/*.rkt
+    - ~/racket/bin/raco test rosette/litmus/*.rkt
