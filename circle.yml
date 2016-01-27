@@ -7,7 +7,6 @@ machine:
         curl -L -o racket.sh $RACKET_URL;
         sh ./racket.sh --in-place --dest $RACKET_DIR;
       fi
-    - curl -L -o racket.sh $RACKET_URL
     - git clone https://github.com/emina/rosette.git rosette
     - cd rosette && ~/racket/bin/raco link rosette && ~/racket/bin/raco setup -l rosette
 
