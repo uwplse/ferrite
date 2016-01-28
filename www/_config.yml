@@ -3,6 +3,8 @@ kramdown:
   input: GFM
   hard_wrap: false
 
+baseurl: "/ferrite"
+
 defaults:
   -
     scope:
