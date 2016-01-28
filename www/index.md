@@ -9,7 +9,7 @@ title: Specifying and Checking File System Crash-Consistency Models
 [James Bornholt](http://homes.cs.washington.edu/~bornholt/),
 [Antoine Kaufmann](http://homes.cs.washington.edu/~antoinek/),
 [Jialin Li](http://syslab.cs.washington.edu/people/jialin/),
-[Arvind Krishnamurthy](http://www.cs.washington.edu/people/faculty/arvind/) ,
+[Arvind Krishnamurthy](http://www.cs.washington.edu/people/faculty/arvind/),
 [Emina Torlak](http://homes.cs.washington.edu/~emina/),
 [Xi Wang](http://homes.cs.washington.edu/~xi/)
 <br>
