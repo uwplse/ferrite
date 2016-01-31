@@ -16,7 +16,7 @@ title: Specifying and Checking File System Crash-Consistency Models
 [ASPLOS 2016](https://www.ece.cmu.edu/calcm/asplos2016/)
 </p>
 
-[Paper](/ferrite-asplos16.pdf) (PDF, 278 kB)
+[Paper](ferrite-asplos16.pdf) (PDF, 278 kB)
 
 
 Applications depend on persistent storage to recover state after system
