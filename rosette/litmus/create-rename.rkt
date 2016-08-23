@@ -74,7 +74,7 @@
   (check equal? (length all-states) 3))  ; only 3 states: the write can never be synced
 
 (define (test-advfs-correct)
-  (clear-asserts)
+  (clear-state!)
   (define test
     (litmus create-rename-fs-advfs create-rename-setup create-rename-test-correct create-rename-allow))
   (define-values (cex state) (verify-correctness test))

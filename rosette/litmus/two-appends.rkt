@@ -71,7 +71,7 @@
   (check equal? (length all-states) 4))  ; only 4 states: the write to 0 can never be synced
 
 (define (test-advfs-correct)
-  (clear-asserts)
+  (clear-asserts!)
   (define test
     (litmus two-appends-fs-advfs two-appends-setup two-appends-test-correct two-appends-allow))
   (define-values (cex state) (verify-correctness test))

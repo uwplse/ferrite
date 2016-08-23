@@ -1,18 +1,8 @@
 #lang s-exp rosette
 
-(require "fs.rkt" "lang.rkt" "litmus.rkt" "nondet.rkt"
-         (only-in rosette/base/bool @boolean?)
-         (only-in rosette/base/num @number?))
+(require "fs.rkt" "lang.rkt" "litmus.rkt" "nondet.rkt")
 
 (provide (all-defined-out))
-
-; Ensure that every symbolic value in prog is bound
-(define (bind-all-syncs prog model)
-  (sat (for/hash ([s (symbolics prog)])
-         (match (model s)
-           [(constant _ (== @number?)) (values s 0)]
-           [(constant _ (== @boolean?)) (values s #f)]
-           [val (values s val)]))))
 
 ; Measure the synchronization cost of a program; i.e., the number
 ; of fsync operations that execute.
@@ -26,7 +16,7 @@
 ; @returns (or/c (listof syscall? #f), where the result is a program
 ;          that makes the litmus test valid if one exists, or #f otherwise.
 (define (synth test)
-  (clear-asserts)
+  (clear-state!)
   (match-define (litmus make-fs setup prog allow) test)
   (define fs (make-fs))
   (when (> (length setup) 0)
@@ -38,7 +28,7 @@
   (define prog-with-syncs (insert-synth-syncs prog))
   (define prog+ (crack fs prog-with-syncs))
   
-  (define-symbolic* order number? [(length prog+)])
+  (define-symbolic* order integer? [(length prog+)])
   
   (define crashes (choices))
   (define newfs
@@ -59,8 +49,7 @@
                     #:guarantee (assert (=> (valid-ordering newfs prog+ order)
                                             (and (apply || allowed)
                                                  cost-constraint))))))
-    (cond [(sat? S)  (set! S (bind-all-syncs prog-with-syncs S))
-                     (define S+ (evaluate prog-with-syncs S))
-                     (define C+ (evaluate C S))
-                     (loop S+ C+)]
-          [else      sol])))
+    (cond [(sat? S) (define S+ (evaluate prog-with-syncs S))
+                    (define C+ (evaluate C S))
+                    (loop S+ C+)]
+          [else     sol])))

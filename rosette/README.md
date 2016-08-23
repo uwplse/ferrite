@@ -6,8 +6,7 @@ This directory contains proof-of-concept verification and synthesis tools built 
 
 These tools are implemented in [Rosette][]. Install the following prerequisites:
 
-* Racket v6.2.1 ([download](http://download.racket-lang.org/racket-v6.2.1.html); v6.3 is not yet supported)
-* Java v1.7 or above ([download](http://www.oracle.com/technetwork/java/javase/downloads/index.html))
+* Racket v6.6 or later ([download](http://download.racket-lang.org/))
 * Rosette ([instructions on GitHub](https://github.com/emina/rosette))
 
 ## Running the tests

@@ -121,12 +121,10 @@
 
 ; Produce a list of all valid reorderings of a program according to the given filesystem.
 (define (all-valid-orderings fs prog)
-  (define-symbolic* order number? [(length prog)])
+  (define-symbolic* order integer? [(length prog)])
   (let loop ([orders '()] [asserts '(#t)])
-    (define S
-      (with-handlers ([exn:fail? (const (unsat))])
-        (solve (assert (and (valid-ordering fs prog order)
-                            (apply && asserts))))))
+    (define S (solve (assert (and (valid-ordering fs prog order)
+                                  (apply && asserts)))))
     (cond [(sat? S) (define o (evaluate order S))
                     (define a (not (equal? order o)))
                     (loop (append orders (list o)) (append asserts (list a)))]
@@ -143,11 +141,11 @@
 ; and after the last ops.
 (define (insert-synth-syncs prog)
   (define-symbolic* sync0? boolean?)
-  (define-symbolic* fd0 number?)
+  (define-symbolic* fd0 integer?)
   (for/fold ([ops (list (efsync fd0 sync0?))])
             ([op prog])
     (define-symbolic* sync? boolean?)
-    (define-symbolic* fd number?)
+    (define-symbolic* fd integer?)
     (values (append ops (list op (efsync fd sync?))))))
 
 ; Remove unused fsync operations (i.e., efsync syscalls with (efsync-enabled e) = #f)

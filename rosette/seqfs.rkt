@@ -1,6 +1,6 @@
 #lang s-exp rosette
 
-(require "fs.rkt" "lang.rkt" rosette/lib/reflect/match)
+(require "fs.rkt" "lang.rkt" rosette/lib/match)
 
 (provide seq-fs)
 
