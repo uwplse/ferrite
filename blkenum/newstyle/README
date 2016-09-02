@@ -1,0 +1,21 @@
+server:
+  ./blockenum.py
+
+client: may need to run `modprobe nbd` first
+  mkdir -p /tmp/test
+  sudo nbd-client localhost 10809 /dev/nbd0 -block-size 4096
+  sudo mkfs.ext4 -b 4096 /dev/nbd0
+  sudo mount /dev/nbd0 /tmp/test
+  curl http://localhost:10880/begin
+  . . . cd /tmp/test && do something . . .
+  curl -o test.bin http://localhost:10880/end
+  sudo umount /tmp/test
+  sudo nbd-client -d /dev/nbd0
+
+Now run `./genimg.py test.bin` to generate a bunch of images by
+reordering writes (between flushes).
+
+Again, load each of the generated images using:
+  ./blockenum.py --load test.bin.*
+
+Run nbd-client to mount and inspect them.

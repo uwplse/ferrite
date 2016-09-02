@@ -1,0 +1,17 @@
+Example setup using blkenum.py (in-memory block device)
+
+server: run blkenum.py
+
+client (linux kernel):
+  sudo nbd-client localhost 10809 /dev/nbd0
+  sudo mkfs.ext4 /dev/nbd0
+  sudo mount /dev/nbd0 /path/to/whatever
+  . . . create files/dirs . . .
+  sudo umount /path/to/whatever
+  sudo nbd-client -d /dev/nbd0
+
+client (qemu):
+  add "-drive file=nbd:localhost:10809" to qemu
+  # mkfs.ext4 /dev/sdb
+  # mount /dev/sdb /path/to/whatever
+  ...

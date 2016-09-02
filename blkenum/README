@@ -1,0 +1,2 @@
+The block enumerator is implemented as a block device using the NBD
+protocol (with either oldstyle or newstyle negotiation).
